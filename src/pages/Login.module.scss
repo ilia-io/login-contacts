@@ -1,0 +1,23 @@
+main {
+  width: 375px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 200px;
+
+    input {
+      padding: 4px;
+      margin: 4px auto;
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      margin: 16px auto;
+    }
+  }
+}
