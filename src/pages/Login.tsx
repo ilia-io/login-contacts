@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Login.module.scss';
 
-const Login = () => {
+const Login: React.FC = () => {
   return (
     <main style={styles}>
       <h1>Login</h1>

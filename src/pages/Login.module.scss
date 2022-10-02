@@ -18,6 +18,16 @@ main {
     button {
       width: 100%;
       margin: 16px auto;
+      padding: 4px;
+      background: rgb(91, 200, 255);
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #333;
+
+      &:active {
+        background: rgb(76, 165, 210);
+      }
     }
   }
 }

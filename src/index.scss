@@ -1,3 +1,10 @@
+@mixin back {
+  background: #249ae4;
+  background: -webkit-radial-gradient(center, #249ae4, #173486);
+  background: -moz-radial-gradient(center, #249ae4, #173486);
+  background: radial-gradient(ellipse at center, #249ae4, #173486);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -8,11 +15,8 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  background: #249ae4;
-  background: -webkit-radial-gradient(center, #249ae4, #173486);
-  background: -moz-radial-gradient(center, #249ae4, #173486);
-  background: radial-gradient(ellipse at center, #249ae4, #173486);
+
+  @include back;
 }
 
 code {
@@ -21,9 +25,10 @@ code {
 
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 600px;
+  max-width: 600px;
   height: 100vh;
   margin: 0 auto;
 }
