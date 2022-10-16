@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchUsers } from '../features/usersSlice';
+import { deleteUser, fetchUsers } from '../features/usersSlice';
 import styles from './Contacts.module.scss';
 
 interface IContacts {
@@ -11,7 +11,7 @@ interface IContacts {
 }
 
 const Contacts: React.FC = () => {
-  const [userData, setuserData] = useState<IContacts[]>([]);
+  //const [userData, setuserData] = useState<IContacts[]>([]);
   const dispatch = useAppDispatch();
   const { users, error, status } = useAppSelector(
     (state) => state.usersReducer
@@ -43,7 +43,7 @@ const Contacts: React.FC = () => {
                   <button type="button">
                     <img src="assets/edit.png" alt="edit icon" />
                   </button>
-                  <button type="button">
+                  <button onClick={() => dispatch(deleteUser(user.id))} type="button">
                     <img src="assets/remove.png" alt="remove icon" />
                   </button>
                 </div>
