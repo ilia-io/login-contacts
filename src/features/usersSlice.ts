@@ -9,19 +9,37 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   return data;
 });
 
-const usersSlice = createSlice({
+interface UserState {
+  users: any[];
+  status: 'loading' | 'success' | 'error';
+  error: null | string;
+}
+
+const initialState: UserState = {
+  users: [],
+  status: 'loading',
+  error: null,
+};
+
+export const usersSlice = createSlice({
   name: 'users',
-  initialState: {
-    users: [],
-    status: null,
-    error: null,
-  },
+  initialState,
   reducers: {
-    userReducer: () => {},
   },
   extraReducers: {
-    // [fetchUsers.pending]: (state, action) => {},
-    // [fetchUsers.fulfilled]: (state, action) => {},
-    // [fetchUsers.rejected]: (state, action) => {},
+    [fetchUsers.pending.type]: (state) => {
+      state.status = 'loading';
+      state.error = null;
+    },
+    [fetchUsers.fulfilled.type]: (state, action) => {
+      state.users = action.payload;
+      state.status = 'success';
+    },
+    [fetchUsers.rejected.type]: (state) => {
+      state.status = 'error';
+      state.users = [];
+    },
   },
 });
+
+export default usersSlice.reducer;

@@ -55,7 +55,11 @@ const DefaultApp = () => (
 const App: React.FC = () => {
   return (
     <div className="container">
+      <Login />
       <Contacts />
+      <Login />
+      <Contacts />
+      <Login />
     </div>
   );
 };

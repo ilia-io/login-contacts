@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchUsers } from '../features/usersSlice';
 import styles from './Contacts.module.scss';
 
 interface IContacts {
@@ -10,54 +12,47 @@ interface IContacts {
 
 const Contacts: React.FC = () => {
   const [userData, setuserData] = useState<IContacts[]>([]);
-  // useEffect(() => {
-  //   fetch('https://jsonplaceholder.typicode.com/users')
-  //     .then((response) => response.json())
-  //     .then((json) => setuserData(json));
-  // }, []);
+  const dispatch = useAppDispatch();
+  const { users, error, status } = useAppSelector(
+    (state) => state.usersReducer
+  );
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   return (
-    <main style={styles}>
-      <div>
-        <h1>Contacts</h1>
-        <button type="button">
-          <img src="assets/add.png" alt="add icon" />
-        </button>
-      </div>
-      <input type="text" placeholder="Поиск..." />
-      <section>
-        <ul>
-          <li>
-            <div>
-              <p>Leonel Messi</p>
-              <p>messi@gmail.com</p>
-            </div>
-            <div>
-              <button type="button">
-                <img src="assets/edit.png" alt="edit icon" />
-              </button>
-              <button type="button">
-                <img src="assets/remove.png" alt="remove icon" />
-              </button>
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Leonel Messi</p>
-              <p>messi@gmail.com</p>
-            </div>
-            <div>
-              <button type="button">
-                <img src="assets/edit.png" alt="edit icon" />
-              </button>
-              <button type="button">
-                <img src="assets/remove.png" alt="remove icon" />
-              </button>
-            </div>
-          </li>
-        </ul>
-      </section>
-    </main>
+    <div className="_container">
+      <main style={styles}>
+        <div>
+          <h1>Contacts</h1>
+          <button type="button">
+            <img src="assets/add.png" alt="add icon" />
+          </button>
+        </div>
+        <input type="text" placeholder="Поиск..." />
+        <section>
+          <ul>
+            {users.map((user) => (
+              <li key={user.id}>
+                <div>
+                  <p>{user.name}</p>
+                  <p>{user.email}</p>
+                </div>
+                <div>
+                  <button type="button">
+                    <img src="assets/edit.png" alt="edit icon" />
+                  </button>
+                  <button type="button">
+                    <img src="assets/remove.png" alt="remove icon" />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </div>
   );
 };
 

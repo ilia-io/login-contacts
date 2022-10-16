@@ -3,20 +3,16 @@ import styles from './Login.module.scss';
 
 const Login: React.FC = () => {
   return (
-    <main style={styles}>
-      <h1>Login</h1>
-      <form action="submit">
-        <div>
-          <input type="text" placeholder="Email" id="email" />
-        </div>
-        <div>
-          <input type="password" placeholder="Password" id="password" />
-        </div>
-        <div>
-          <button type="button">Login</button>
-        </div>
-      </form>
-    </main>
+    <div className="_container">
+      <main style={styles}>
+        <h1>Login</h1>
+        <form action="submit">
+            <input type="text" placeholder="Email" id="email" />
+            <input type="password" placeholder="Password" id="password" />
+            <button type="button">Login</button>
+        </form>
+      </main>
+    </div>
   );
 };
 

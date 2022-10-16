@@ -5,13 +5,12 @@
   background: radial-gradient(ellipse at center, #249ae4, #173486);
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+  padding: 0;
+  height: 100%;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,11 +23,15 @@ code {
 }
 
 .container {
+  min-height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 600px;
-  height: 100vh;
+}
+
+._container {
+  max-width: 1380px;
   margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: content-box;
 }
