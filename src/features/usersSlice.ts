@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../@types/user';
 import { RootState, AppThunk } from '../app/store';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
@@ -8,7 +9,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
 });
 
 interface UserState {
-  users: any[];
+  users: IUser[];
   status: 'loading' | 'success' | 'error';
   error: null | string;
 }
@@ -23,8 +24,11 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    deleteUser(state, action) {
-      state.users = state.users.filter((user) => user.id !== action.payload)
+    deleteUser(state, action: PayloadAction<number>) {
+      state.users = state.users.filter((user) => user.id !== action.payload);
+    },
+    addUser(state, action: PayloadAction<IUser>) {
+      state.users.unshift(action.payload);
     },
   },
   extraReducers: {
@@ -43,6 +47,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { deleteUser } = usersSlice.actions;
+export const { deleteUser, addUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

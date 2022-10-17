@@ -1,9 +1,12 @@
+@import './scss/modal.scss';
+
 @mixin back {
   background: #249ae4;
   background: -webkit-radial-gradient(center, #249ae4, #173486);
   background: -moz-radial-gradient(center, #249ae4, #173486);
   background: radial-gradient(ellipse at center, #249ae4, #173486);
 }
+
 
 body {
   box-sizing: border-box;
@@ -14,6 +17,7 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
 
   @include back;
 }
