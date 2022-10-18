@@ -3,11 +3,13 @@ import styles from './Login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { setUser } from '../features/loginSlice';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+
+  //то useHistioy замените на useNavigate "const navigate = useNavigate(); navigate("/")//
 
   const dispatch = useAppDispatch();
   const auth = getAuth();
@@ -16,7 +18,7 @@ const Login: React.FC = () => {
   type TLogin = (email: string, pass: string) => void;
 
   const handleLogin: TLogin = (email, pass) => {
-    signInWithEmailAndPassword(auth, email, pass)
+    createUserWithEmailAndPassword(auth, email, pass)
       .then(({ user }) => {
         dispatch(
           setUser({
@@ -35,7 +37,7 @@ const Login: React.FC = () => {
     <div className="container">
       <div className="_container">
         <main style={styles}>
-          <h1>Login</h1>
+          <h1>Register</h1>
           <form action="submit">
             <input
               onChange={(e) => setEmail(e.target.value)}
@@ -52,7 +54,7 @@ const Login: React.FC = () => {
               id="password"
             />
             <button onClick={() => handleLogin(email, pass)} type="button">
-              Login
+              Register
             </button>
             <Link to={'/register'}>Create account</Link>
           </form>
@@ -62,4 +64,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

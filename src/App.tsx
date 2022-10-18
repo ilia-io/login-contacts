@@ -2,6 +2,10 @@ import React from 'react';
 import { Counter } from './features/counter/Counter';
 import Contacts from './pages/Contacts';
 import Login from './pages/Login';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import Register from './pages/Register';
+import { useAuth } from './app/hooks';
+import { removeUser } from './features/loginSlice';
 
 const DefaultApp = () => (
   <div className="App">
@@ -53,10 +57,35 @@ const DefaultApp = () => (
 );
 
 const App: React.FC = () => {
+  const { isAuth, email } = useAuth();
+
   return (
-    <div className="container">
-      <Contacts />
-    </div>
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isAuth ? (
+              <Contacts emailProp={email} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="*"
+          element={
+            isAuth ? (
+              <Contacts emailProp={email} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+      </Routes>
+    </>
   );
 };
 
