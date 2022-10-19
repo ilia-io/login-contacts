@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Counter } from './features/counter/Counter';
 import Contacts from './pages/Contacts';
 import Login from './pages/Login';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
-import { useAuth } from './app/hooks';
+import { useAppDispatch, useAuth } from './app/hooks';
 import { removeUser } from './features/loginSlice';
+import { fetchUsers } from './features/asyncActions';
 
 const DefaultApp = () => (
   <div className="App">
@@ -56,9 +57,16 @@ const DefaultApp = () => (
   </div>
 );
 
+
+
 const App: React.FC = () => {
   const { isAuth, email } = useAuth();
+const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+  
   return (
     <>
       <Routes>

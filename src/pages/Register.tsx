@@ -3,34 +3,37 @@ import styles from './Login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { setUser } from '../features/loginSlice';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { postUsers } from '../features/asyncActions';
+import { getId } from './Contacts';
+import { setCurrentUser } from '../features/usersSlice';
+//import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
-  //то useHistioy замените на useNavigate "const navigate = useNavigate(); navigate("/")//
-
   const dispatch = useAppDispatch();
-  const auth = getAuth();
+  //const auth = getAuth();
   const navigate = useNavigate();
 
   type TLogin = (email: string, pass: string) => void;
 
   const handleLogin: TLogin = (email, pass) => {
-    createUserWithEmailAndPassword(auth, email, pass)
-      .then(({ user }) => {
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            // @ts-ignore
-            token: user.accessToken,
-          })
-        );
-        navigate('/');
+    dispatch(
+      setCurrentUser({
+        id: getId(),
+        name: pass,
+        email: email,
       })
-      .catch(console.error);
+    );
+    dispatch(
+      postUsers({
+        id: getId(),
+        name: pass,
+        email: email,
+      })
+    );
+    navigate('/');
   };
 
   return (
@@ -56,7 +59,7 @@ const Register: React.FC = () => {
             <button onClick={() => handleLogin(email, pass)} type="button">
               Register
             </button>
-            <Link to={'/register'}>Create account</Link>
+            <Link to={'/login'}>Log in</Link>
           </form>
         </main>
       </div>

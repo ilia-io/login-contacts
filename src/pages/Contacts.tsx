@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { removeUser } from '../features/loginSlice';
-import { deleteUser, fetchUsers, addUser } from '../features/usersSlice';
+import { fetchUsers } from '../features/asyncActions';
+import { removeCurrentUser } from '../features/usersSlice';
+import { deleteUser, addUser } from '../features/usersSlice';
 import styles from './Contacts.module.scss';
 
 interface IContacts {
@@ -14,6 +15,8 @@ interface IContactsProps {
   emailProp: string | null;
 }
 
+export const getId = () => new Date().valueOf();
+
 const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
   //const [userData, setuserData] = useState<IContacts[]>([]);
   const [modal, setModal] = useState<boolean>(false);
@@ -22,13 +25,10 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
-  const { users, error, status } = useAppSelector(
+  const { users, error, isLoading } = useAppSelector(
     (state) => state.usersReducer
   );
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
 
   const handleAddUserButton = () => {
     dispatch(
@@ -37,6 +37,10 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
     setfromInputName('');
     setfromInputEmail('');
     setModal(false);
+  };
+
+  const logOut = () => {
+    dispatch(removeCurrentUser());
   };
 
   const Modal = () => {
@@ -76,13 +80,11 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
     );
   };
 
-  const getId = () => new Date().valueOf();
-
   return (
     <div className="container">
       <div className="_container">
         <main style={styles}>
-          <button onClick={() => dispatch(removeUser())} type="button">
+          <button onClick={() => logOut()} type="button">
             Log out from {emailProp}
           </button>
           <div className="title">
