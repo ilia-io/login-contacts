@@ -56,8 +56,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="_container">
-        <main style={styles}>
+        <main className={styles.main}>
           <h1>Login</h1>
           <form action="submit">
             <input
@@ -81,7 +80,6 @@ const Login: React.FC = () => {
           </form>
         </main>
       </div>
-    </div>
   );
 };
 

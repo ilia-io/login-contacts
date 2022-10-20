@@ -26,14 +26,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.container {
-  min-height: 100%;
-  overflow: hidden;
+#root {
   display: flex;
-  flex-direction: column;
+  overflow: hidden;
 }
 
-._container {
+.container {
   max-width: 1380px;
   margin: 0 auto;
   padding: 0 10px;

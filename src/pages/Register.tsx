@@ -38,8 +38,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="_container">
-        <main style={styles}>
+        <main className={styles.main}>
           <h1>Register</h1>
           <form action="submit">
             <input
@@ -63,7 +62,6 @@ const Register: React.FC = () => {
           </form>
         </main>
       </div>
-    </div>
   );
 };
 

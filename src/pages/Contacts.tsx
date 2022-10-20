@@ -29,7 +29,6 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
     (state) => state.usersReducer
   );
 
-
   const handleAddUserButton = () => {
     dispatch(
       addUser({ id: getId(), name: fromInputName, email: fromInputEmail })
@@ -82,18 +81,17 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
 
   return (
     <div className="container">
-      <div className="_container">
-        <main style={styles}>
+        <main className={styles.main}>
           <button onClick={() => logOut()} type="button">
             Log out from {emailProp}
           </button>
-          <div className="title">
+          <div className={styles.title}>
             <h1>Contacts</h1>
             <button onClick={() => setModal(true)} type="button">
               <img src="assets/add.png" alt="add icon" />
             </button>
           </div>
-          <div className="search">
+          <div className={styles.search}>
             <input
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -145,7 +143,6 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
           {Modal()}
         </main>
       </div>
-    </div>
   );
 };
 
