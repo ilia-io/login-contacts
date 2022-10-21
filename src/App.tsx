@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
 import { useAppDispatch, useAuth } from './app/hooks';
-import { removeUser } from './features/loginSlice';
 import { fetchUsers } from './features/asyncActions';
 
 const DefaultApp = () => (

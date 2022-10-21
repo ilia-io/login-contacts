@@ -7,7 +7,7 @@ export const fetchUsers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get<IUser[]>(
-        'https://jsonplaceholder.typicode.com/users'
+        'https://login-contact-server.herokuapp.com/users'
       );
       return response.data;
     } catch (error) {
@@ -21,17 +21,49 @@ export const postUsers = createAsyncThunk(
   async (userData: IUser, thunkAPI) => {
     try {
       const response = await axios.post<IUser>(
-        'https://jsonplaceholder.typicode.com/users',
+        'https://login-contact-server.herokuapp.com/users',
         {
           id: userData.id,
           name: userData.name,
           email: userData.email,
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Не удалось загрузить пользователей');
+      return thunkAPI.rejectWithValue('Не удалось добавить пользователя');
+    }
+  }
+);
+
+export const putUsers = createAsyncThunk(
+  'user/put',
+  async (userData: IUser, thunkAPI) => {
+    try {
+      const response = await axios.put<IUser>(
+        `https://login-contact-server.herokuapp.com/users/${userData.id}`,
+        {
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Не удалось обновить пользователя');
+    }
+  }
+);
+
+export const deleteUsers = createAsyncThunk(
+  'user/delete',
+  async (userData: IUser, thunkAPI) => {
+    try {
+      const response = await axios.delete<IUser>(
+        `https://login-contact-server.herokuapp.com/users/${userData.id}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Не удалось обновить пользователя');
     }
   }
 );

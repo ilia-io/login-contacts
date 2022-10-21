@@ -1,7 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../@types/user';
 import { RootState, AppThunk } from '../app/store';
-import { fetchUsers, postUsers } from './asyncActions';
+import { deleteUsers, fetchUsers, postUsers, putUsers } from './asyncActions';
+
+interface ICurrentUser {
+  id: number;
+  name: string;
+  email: string;
+}
 
 interface UserState {
   users: IUser[];
@@ -21,21 +27,12 @@ const initialState: UserState = {
   },
 };
 
-interface ICurrentUser {
-  id: number;
-  name: string;
-  email: string;
-}
-
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
     deleteUser(state, action: PayloadAction<number>) {
       state.users = state.users.filter((user) => user.id !== action.payload);
-    },
-    addUser(state, action: PayloadAction<IUser>) {
-      state.users.unshift(action.payload);
     },
     setCurrentUser(state, action: PayloadAction<IUser>) {
       state.currentUser.id = action.payload.id;
@@ -74,13 +71,48 @@ export const usersSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(putUsers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(putUsers.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = '';
+      state.users.map((user) =>
+        user.id === action.payload.id ? (user = action.payload) : user
+      );
+    });
+    builder.addCase(putUsers.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(deleteUsers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteUsers.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = '';
+    });
+    builder.addCase(deleteUsers.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export const { deleteUser, addUser, setCurrentUser, removeCurrentUser } =
+export const { deleteUser, setCurrentUser, removeCurrentUser } =
   usersSlice.actions;
 
 export default usersSlice.reducer;
+
+// if(state.users) {
+
+//   state.users.map((localUser) =>  action.payload.filter((serverUser) => serverUser.id === localUser.id)
+//   );
+// }
+
+// addUser(state, action: PayloadAction<IUser>) {
+//   state.users.unshift(action.payload);
+// },
 
 // extraReducers: {
 //   [fetchUsers.pending.type]: (state) => {
