@@ -7,6 +7,7 @@ interface ICurrentUser {
   id: number;
   name: string;
   email: string;
+  password: string;
 }
 
 interface UserState {
@@ -24,6 +25,7 @@ const initialState: UserState = {
     id: 0,
     name: '',
     email: '',
+    password: '',
   },
 };
 
@@ -31,18 +33,17 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    deleteUser(state, action: PayloadAction<number>) {
-      state.users = state.users.filter((user) => user.id !== action.payload);
-    },
-    setCurrentUser(state, action: PayloadAction<IUser>) {
+    setCurrentUser(state, action: PayloadAction<ICurrentUser>) {
       state.currentUser.id = action.payload.id;
       state.currentUser.name = action.payload.name;
       state.currentUser.email = action.payload.email;
+      state.currentUser.password = action.payload.password;
     },
     removeCurrentUser(state) {
       state.currentUser.id = 0;
       state.currentUser.name = '';
       state.currentUser.email = '';
+      state.currentUser.password = '';
     },
   },
   extraReducers: (builder) => {
@@ -65,7 +66,12 @@ export const usersSlice = createSlice({
     builder.addCase(postUsers.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = '';
-      state.users.unshift(action.payload);
+      state.users.push(action.payload);
+
+      state.currentUser.id = action.payload.id;
+      state.currentUser.name = action.payload.name;
+      state.currentUser.email = action.payload.email;
+      state.currentUser.password = action.payload.password;
     });
     builder.addCase(postUsers.rejected, (state, action) => {
       state.isLoading = false;
@@ -77,7 +83,7 @@ export const usersSlice = createSlice({
     builder.addCase(putUsers.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = '';
-      state.users.map((user) =>
+      state.users = state.users.map((user) =>
         user.id === action.payload.id ? (user = action.payload) : user
       );
     });
@@ -91,6 +97,7 @@ export const usersSlice = createSlice({
     builder.addCase(deleteUsers.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = '';
+      state.users = state.users.filter((user) => user.id !== action.payload);
     });
     builder.addCase(deleteUsers.rejected, (state, action) => {
       state.isLoading = false;
@@ -99,10 +106,13 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { deleteUser, setCurrentUser, removeCurrentUser } =
-  usersSlice.actions;
+export const { setCurrentUser, removeCurrentUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
+
+// deleteUser(state, action: PayloadAction<number>) {
+//   state.users = state.users.filter((user) => user.id !== action.payload);
+// },
 
 // if(state.users) {
 

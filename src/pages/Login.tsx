@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { IUser } from '../@types/user';
 import { setCurrentUser } from '../features/usersSlice';
 import { getId } from './Contacts';
+import Loader from '../components/Loader/Loader';
 //import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login: React.FC = () => {
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
 
   //type TLogin = (email: string, pass: string) => void;
 
-  const users = useAppSelector((state) => state.usersReducer.users);
+  const { users , isLoading} = useAppSelector((state) => state.usersReducer);
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,48 +26,51 @@ const Login: React.FC = () => {
     const isValid = userExist?.name === pass;
 
     if (!userExist) {
-      alert('User not found!');
+      alert('Пользователь не найден!');
     } else {
       if (isValid) {
         dispatch(
           setCurrentUser({
-            id: getId(),
-            name: pass,
+            id: 1000,
+            name: '',
             email: email,
+            password: pass,
           })
         );
         navigate('/');
       } else {
-        alert('Invalid Email or Password!');
+        alert('Неправильный емейл или пароль');
       }
     }
   };
 
   return (
     <div className="container">
-      <main className={styles.main}>
-        <h1>Login</h1>
-        <form onSubmit={handleLogin}>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            type="email"
-            placeholder="Email"
-            id="email"
-            required
-          />
-          <input
-            onChange={(e) => setPass(e.target.value)}
-            value={pass}
-            type="password"
-            placeholder="Password"
-            id="password"
-            required
-          />
-          <button type="submit">Login</button>
-          <Link to={'/register'}>Create account</Link>
-        </form>
-      </main>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <main className={styles.main}>
+          <h1>Логин</h1>
+          <form onSubmit={handleLogin}>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="email"
+              placeholder="Емейл"
+              required
+            />
+            <input
+              onChange={(e) => setPass(e.target.value)}
+              value={pass}
+              type="password"
+              placeholder="Пароль"
+              required
+            />
+            <button type="submit">Логин</button>
+            <Link to={'/register'}>Создать новый аккаунт</Link>
+          </form>
+        </main>
+      )}
     </div>
   );
 };

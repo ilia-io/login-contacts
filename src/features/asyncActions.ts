@@ -1,6 +1,8 @@
+import { useAppDispatch } from './../app/hooks';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IUser } from '../@types/user';
+import { setCurrentUser } from './usersSlice';
 
 export const fetchUsers = createAsyncThunk(
   'user/fetchAll',
@@ -26,6 +28,7 @@ export const postUsers = createAsyncThunk(
           id: userData.id,
           name: userData.name,
           email: userData.email,
+          password: userData.password,
         }
       );
       return response.data;
@@ -45,11 +48,12 @@ export const putUsers = createAsyncThunk(
           id: userData.id,
           name: userData.name,
           email: userData.email,
+          password: userData.password,
         }
       );
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Не удалось обновить пользователя');
+      return thunkAPI.rejectWithValue('Не удалось обновить данные');
     }
   }
 );
@@ -61,7 +65,7 @@ export const deleteUsers = createAsyncThunk(
       const response = await axios.delete<IUser>(
         `https://login-contact-server.herokuapp.com/users/${userData.id}`
       );
-      return response.data;
+      return response.data.id;
     } catch (error) {
       return thunkAPI.rejectWithValue('Не удалось обновить пользователя');
     }

@@ -4,8 +4,9 @@ import Contacts from './pages/Contacts';
 import Login from './pages/Login';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
-import { useAppDispatch, useAuth } from './app/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from './app/hooks';
 import { fetchUsers } from './features/asyncActions';
+import Loader from './components/Loader/Loader';
 
 const DefaultApp = () => (
   <div className="App">
@@ -56,18 +57,18 @@ const DefaultApp = () => (
   </div>
 );
 
-
-
 const App: React.FC = () => {
   const { isAuth, email } = useAuth();
-const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const { users, isLoading } = useAppSelector((state) => state.usersReducer);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
-  
+
   return (
     <>
+    
       <Routes>
         <Route
           path="/"
