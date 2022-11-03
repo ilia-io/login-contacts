@@ -1,21 +1,14 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useState } from 'react';
 import { IUser } from '../@types/user';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Loader from '../components/Loader/Loader';
 import {
   deleteUsers,
-  fetchUsers,
   postUsers,
   putUsers,
 } from '../features/asyncActions';
 import { removeCurrentUser } from '../features/usersSlice';
 import styles from './Contacts.module.scss';
-
-interface IContacts {
-  id: number;
-  name: string;
-  email: string;
-}
 
 interface IContactsProps {
   emailProp: string | null;
@@ -24,17 +17,15 @@ interface IContactsProps {
 export const getId = () => new Date().valueOf();
 
 const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
-  //const [userData, setuserData] = useState<IContacts[]>([]);
   const [addModalState, setAddModalState] = useState<boolean>(false);
   const [editModalState, setEditModalState] = useState<boolean>(false);
   const [fromInputName, setFromInputName] = useState('');
   const [fromInputEmail, setFromInputEmail] = useState('');
-  const [fromInputPass, setFromInputPass] = useState('');
   const [fromInputId, setFromInputId] = useState(0);
   const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
-  const { users, currentUser, isLoading } = useAppSelector(
+  const { users, error, isLoading } = useAppSelector(
     (state) => state.usersReducer
   );
 

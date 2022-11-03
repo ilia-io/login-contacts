@@ -5,7 +5,6 @@ import {
   Action,
   combineReducers,
 } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import {
   persistStore,
   persistReducer,
@@ -17,17 +16,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { fetchUsers } from '../features/asyncActions';
-import usersSlice from './../features/usersSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  //blacklist: ['user/fetchAll'],
 };
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   usersReducer,
 });
 

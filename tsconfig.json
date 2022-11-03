@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "bin/counterSlice.spec.ts", "src/@types"]
+  "include": ["src", "bin/counterSlice.spec.ts", "src/@types", "bin/counter"]
 }
