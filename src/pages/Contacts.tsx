@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { IUser } from '../@types/user';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Loader from '../components/Loader/Loader';
-import {
-  deleteUsers,
-  postUsers,
-  putUsers,
-} from '../features/asyncActions';
+import { deleteUsers, postUsers, putUsers } from '../features/asyncActions';
 import { removeCurrentUser } from '../features/usersSlice';
 import styles from './Contacts.module.scss';
 
@@ -73,6 +69,10 @@ const Contacts: React.FC<IContactsProps> = ({ emailProp }) => {
   const onClickDelete = (user: IUser) => {
     dispatch(deleteUsers(user));
   };
+
+  if (error) {
+    alert(error);
+  }
 
   const addModal = () => {
     return (

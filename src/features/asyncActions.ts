@@ -66,7 +66,7 @@ export const deleteUsers = createAsyncThunk(
       );
       return userData.id;
     } catch (error) {
-      return thunkAPI.rejectWithValue('Не удалось обновить пользователя');
+      return thunkAPI.rejectWithValue('Не удалось удалить пользователя');
     }
   }
 );

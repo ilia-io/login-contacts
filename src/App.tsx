@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Contacts from './pages/Contacts';
 import Login from './pages/Login';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
-import { useAppDispatch, useAppSelector, useAuth } from './app/hooks';
+import { useAppDispatch, useAuth } from './app/hooks';
 import { fetchUsers } from './features/asyncActions';
 
 
