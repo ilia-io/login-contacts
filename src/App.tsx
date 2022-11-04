@@ -6,7 +6,6 @@ import Register from './pages/Register';
 import { useAppDispatch, useAuth } from './app/hooks';
 import { fetchUsers } from './features/asyncActions';
 
-
 const App: React.FC = () => {
   const { isAuth, email } = useAuth();
   const dispatch = useAppDispatch();

@@ -1,4 +1,3 @@
-
 .main {
   width: 100%;
   display: flex;
@@ -53,6 +52,7 @@
       height: 100%;
       outline: 0;
       border: 1.5px solid rgba(255, 255, 255, 0);
+      border-radius: 10px;
 
       &:hover {
         border: 1.5px solid darken(white, 20%);
@@ -86,7 +86,8 @@
       align-items: center;
       margin: 8px;
       padding: 4px;
-      border: 1.5px solid rgb(65, 65, 65);
+      border: 1.5px solid rgba(65, 65, 65, 0.685);
+      border-radius: 10px;
 
       div {
 
